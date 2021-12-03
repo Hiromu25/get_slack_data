@@ -2,8 +2,6 @@ import * as fs from "fs"
 import { message } from "../entity/message"
 import { getChannelData, getChannelMembers, getChannels } from "./get_channels"
 import { getMessage } from "./get_message"
-import { removeChannel } from "../entity/remove_channel"
-import { promiseConcurrent, runConcurrentlyAsync } from "./promiseAll"
 import { getUserData } from "./get_users"
 
 let messages:message[] = []
