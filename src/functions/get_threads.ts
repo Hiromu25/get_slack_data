@@ -17,7 +17,7 @@ export const getThread = async(channelId:string,thread_ts:string) => {
             if (message.type == "message" && i != 0){
                 let user = message.user!
                 let timestamp = Number(message.ts!)
-                let text = message.text!
+                // let text = message.text!
                 let isBot:boolean
                 if (message.bot_id == undefined){
                     isBot = false
@@ -29,10 +29,16 @@ export const getThread = async(channelId:string,thread_ts:string) => {
                     reactions = await getReactions(message.reactions)
                 }
                 let threadMessage:thread
+                // threadMessage = {
+                //     user: user,
+                //     timestamp: timestamp,
+                //     text: text,
+                //     isBot: isBot,
+                //     reactions: reactions
+                // }
                 threadMessage = {
                     user: user,
                     timestamp: timestamp,
-                    text: text,
                     isBot: isBot,
                     reactions: reactions
                 }
