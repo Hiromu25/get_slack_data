@@ -1,3 +1,4 @@
+import { COLLA_MEMBER_ID } from "../config/env";
 import { message, thread } from "../entity/message";
 import { reaction } from "../entity/reaction";
 import { slackBoltApp } from "../plugin/slack";
@@ -17,7 +18,10 @@ export const getMessage = async (channelId:string,nextCursor:string|undefined,la
         if (result.messages != undefined || result.messages != []){
             for (let message of result.messages!){
                 let user = message.user!
-                // let text = message.text!
+                let text="";
+                if (user == COLLA_MEMBER_ID){
+                    text = message.text!
+                }
                 let timestamp = Number(message.ts!)
                 let isBot:boolean
                 if (message.bot_id == undefined){
@@ -34,7 +38,7 @@ export const getMessage = async (channelId:string,nextCursor:string|undefined,la
                     reactions = await getReactions(message.reactions)
                 }
                 // messages.push({channel:channelId,user:user,text:text,timestamp:timestamp,isBot:isBot,threads,reactions})
-                messages.push({channel:channelId,user:user,timestamp:timestamp,isBot:isBot,reactions})
+                messages.push({channel:channelId,user:user,text:text,timestamp:timestamp,isBot:isBot,reactions})
             }
             let nextMessages:message[] = []
             if (result.response_metadata?.next_cursor != undefined || result.has_more == true){
