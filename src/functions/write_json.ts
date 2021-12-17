@@ -41,7 +41,7 @@ export const writeMessageData = async (latest:string|undefined,oldest:string|und
         console.log("********start getting data*********")
         await getChannelsMessage(channels,latest,oldest)
         console.log("\n\n total length = "+messages.length+ "\nmessageNum = "+ messageNum + "\n\n")
-        fs.writeFileSync("./data/message.json",JSON.stringify(messages,null,'\t'))
+        fs.writeFileSync("./data/channel_messages.json",JSON.stringify(messages,null,'\t'))
     }catch(error){
         console.error(error)
         return messages
@@ -50,9 +50,10 @@ export const writeMessageData = async (latest:string|undefined,oldest:string|und
 
 const getChannelsMessage = async (channels:string[],latest:string|undefined,oldest:string|undefined) => {
     try{
+        const channelLen = channels.length
         let promiseList = []
         const INIT = 0;
-        const CHUNK = 3; // まとめて実行する数を定義
+        const CHUNK = 5; // まとめて実行する数を定義
         // for (let channelId of channels){
         //     if (!removeChannel.includes(channelId)){
         //         promiseList.push(() => {return new Promise((resorve) => messageAppend(channelId,latest,oldest))})
@@ -65,6 +66,9 @@ const getChannelsMessage = async (channels:string[],latest:string|undefined,olde
             promiseList.push(messageAppend(channelId,latest,oldest))
     
             if ((index + 1) % CHUNK === 0) {
+                await Promise.all(promiseList);
+                promiseList = [];
+            } else if (index+1 == channelLen) {
                 await Promise.all(promiseList);
                 promiseList = [];
             }

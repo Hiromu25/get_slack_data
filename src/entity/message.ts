@@ -7,6 +7,7 @@ export interface message {
     timestamp:number
     isBot:boolean
     reactions?: reaction[]
+    threads: thread[]
 }
 
 export interface thread {

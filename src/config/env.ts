@@ -1,4 +1,5 @@
-require("dotenv").config();
+import dotenv from 'dotenv'
+dotenv.config();
 
 // slack
 export const SLACK_USER_TOKEN = process.env.SLACK_USER_TOKEN;

@@ -1,8 +1,9 @@
 {
-  "name": "workspace-analytics",
+  "name": "data-get",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "eslint.autoFixOnSave": true,
   "eslint.enable": true,
   "eslint.validate": [
@@ -12,7 +13,8 @@
     "typescriptreact"
   ],
   "scripts": {
-    "start": "dotenv -e .env ts-node src/main.ts",
+    "build": "dotenv -e .env tsc -w src/main.ts",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/main.js",
     "start:dev": "dotenv -e .env.development ts-node src/main.ts",
     "lint": "eslint --ext .js,.ts .",
     "format": "prettier --write \"**/*.{js,ts,json}\"",
@@ -43,11 +45,13 @@
     "firebase": "^9.0.2",
     "firebase-admin": "^9.11.1",
     "node-cron": "^3.0.0",
+    "p-queue": "^7.1.0",
     "promises-all-limit": "^1.0.3",
     "ts-node": "^10.0.0",
     "tsc": "^2.0.3",
     "tsc-alias": "^1.2.10",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "^3.9.0",
+    "yarn": "^1.22.17"
   },
   "repository": "https://github.com/Hiromu25/workspace-analytics.git",
   "author": "2525 <hi5ro20mu1999@gmail.com>"
