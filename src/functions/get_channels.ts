@@ -3,14 +3,17 @@
 import { channel } from "../entity/channel";
 import { slackBoltApp } from "../plugin/slack";
 
-export const getChannels = async () => {
+export const getChannels = async (nextCursor: string|undefined) => {
     let channels:string[] = []
     try{
-        const result = await slackBoltApp.client.conversations.list({limit:1000});
+        const result = await slackBoltApp.client.conversations.list({limit:1000,cursor:nextCursor});
         if (result.channels != undefined){
             for (let channel of result.channels) {
                 channels.push(channel.id!)
             }
+        }
+        if (result.response_metadata?.next_cursor != ""){
+            channels = channels.concat(await getChannels(result.response_metadata!.next_cursor))
         }
         return channels
     } catch(error){

@@ -43,7 +43,7 @@ export const getMessage = async (channelId:string,nextCursor:string|undefined,la
             }
             let threads:thread[] = []
             if (message.thread_ts != undefined){
-                threads = await getThread(channelId,message.thread_ts)
+                threads = await getThread(channelId,message.thread_ts,undefined)
             }
             let reactions:reaction[] = []
             if (message.reactions != undefined){

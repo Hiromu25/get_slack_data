@@ -5,11 +5,12 @@ import { getReactions } from "./get_reactions";
 import { wait } from "./wait";
 import { queue } from "../config/queue";
 
-export const getThread = async(channelId:string,thread_ts:string) => {
+export const getThread = async(channelId:string,thread_ts:string,nextCursor:string|undefined) => {
     let threads: thread[] = []
     const result = await slackBoltApp.client.conversations.replies({
         channel: channelId,
-        ts: thread_ts
+        ts: thread_ts,
+        cursor: nextCursor
     })
     if (result.error != undefined){
         console.log(result.error)
@@ -56,6 +57,9 @@ export const getThread = async(channelId:string,thread_ts:string) => {
                 threads.push(threadMessage)
             }
             i ++
+        }
+        if (result.response_metadata?.next_cursor != undefined || result.has_more == true){
+            threads.concat(await getThread(channelId,thread_ts,result.response_metadata?.next_cursor))
         }
     }
     return threads

@@ -1,5 +1,5 @@
 import { reaction } from "../entity/reaction"
-import { Reaction } from "@slack/bolt/node_modules/@slack/web-api/dist/response/ConversationsRepliesResponse"
+import { Reaction } from "@slack/web-api/dist/response/ConversationsRepliesResponse"
 
 export const getReactions = async (data:Reaction[]):Promise<reaction[]> => {
     let reactions:reaction[] = []

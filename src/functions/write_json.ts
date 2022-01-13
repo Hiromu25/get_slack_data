@@ -37,7 +37,7 @@ export const writeChannelUserData = async () => {
 
 export const writeMessageData = async (latest:string|undefined,oldest:string|undefined) => {
     try{
-        const channels = await getChannels()
+        const channels = await getChannels(undefined)
         console.log("********start getting data*********")
         await getChannelsMessage(channels,latest,oldest)
         console.log("\n\n total length = "+messages.length+ "\nmessageNum = "+ messageNum + "\n\n")
