@@ -1,4 +1,5 @@
 import * as fs from "fs"
+import { COLLA_CHANNEL_ID } from "../config/env"
 import { message } from "../entity/message"
 import { getChannelData, getChannelMembers, getChannels } from "./get_channels"
 import { getMessage } from "./get_message"
@@ -26,10 +27,10 @@ export const writeUserData = async () => {
     }
 }
 
-export const writeChannelUserData = async () => {
+export const writeChannelUserData = async (channelId:string) => {
     try {
-        const userData = await getChannelMembers('CHY3RPHB6')
-        fs.writeFileSync("./data/everyoneUser.json",JSON.stringify(userData,null,'\t'))
+        const userData = await getChannelMembers(channelId)
+        fs.writeFileSync("./data/"+channelId+"_user.json",JSON.stringify(userData,null,'\t'))
     } catch(error){
         console.log(error)
     }
