@@ -38,12 +38,15 @@ export const getChannelData = async () => {
     }
 };
 
-export const getChannelMembers = async (channelId:string) => {
+export const getChannelMembers = async (channelId:string,nextCursor: string|undefined) => {
     let members:{userId:string}[] = []
     try{
-        const result = await slackBoltApp.client.conversations.members({channel:channelId})
+        const result = await slackBoltApp.client.conversations.members({channel:channelId,limit:100,cursor:nextCursor})
         for (let member of result.members!){
             members.push({userId:member})
+        }
+        if (result.response_metadata?.next_cursor != ""){
+            members = members.concat(await getChannelMembers(channelId,result.response_metadata!.next_cursor))
         }
         return members
     } catch(error){

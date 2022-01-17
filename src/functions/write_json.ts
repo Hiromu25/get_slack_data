@@ -29,7 +29,7 @@ export const writeUserData = async () => {
 
 export const writeChannelUserData = async (channelId:string) => {
     try {
-        const userData = await getChannelMembers(channelId)
+        const userData = await getChannelMembers(channelId,undefined)
         fs.writeFileSync("./data/"+channelId+"_user.json",JSON.stringify(userData,null,'\t'))
     } catch(error){
         console.log(error)
